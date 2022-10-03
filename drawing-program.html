@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Drawing Program</title>
+
+  <style>
+    #canvas {
+      border: 1px black solid;
+    }
+  </style>
+
+</head>
+<body>
+
+
+<P>Drag the mouse on the canvas</P>
+
+<label>Color</label>
+<input id="color" type="color">
+
+<label>Radius</label>
+<input id="radius" type="range">
+
+<br><br>
+
+<canvas id="canvas" height="400" width="400"></canvas>
+
+
+<script>
+
+  let canvas = document.querySelector('#canvas')
+  let context = canvas.getContext('2d')
+
+  let color = document.querySelector('#color')
+  let radius = document.querySelector('#radius')
+
+
+  // Keep track of whether the mouse button has been pressed down or not.
+  // Think of this as whether the user is drawing or not, is their brush on the canvas?
+  let mousedown = false
+
+  canvas.addEventListener('mousedown', function() {
+    mousedown = true
+  })
+
+  canvas.addEventListener('mouseup', function() {
+    mousedown = false
+  })
+
+  // If mouse leaves the canvas then stop drawing
+  canvas.addEventListener('mouseout', function() {
+    mousedown = false
+  })
+
+  canvas.addEventListener('mousemove', function() {
+
+
+    // If the mouse button is not pressed down, do not draw.
+    if (!mousedown) { return }
+
+    // event is a built-in variable, contains the event that triggered this function
+    // get the x, y location of the event
+    let x = event.offsetX
+    let y = event.offsetY   //offsetX, offsetY, may not work in older browsers
+
+    //Draw a filled rectangle centered under the mouse click
+    //x, y is the top left corner, so shift up and left by 5 to center it under the mouse.
+    context.beginPath()
+    radius = 10 // added this so that it would still draw, not sure how to apply the user input to radius variable and color variable
+    context.arc(x-(radius/2), y-(radius/2), radius, 0, 6.3)
+    context.fillStyle = 'color'
+    context.fill()
+    context.stroke()
+
+  })
+
+</script>
+
+</body>
+</html>
